@@ -1,21 +1,32 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
-import Surprise from "./code-splitting/Surprise";
+import Button from "./components/Button";
+import Card from "./components/Card";
+
+const themes = {
+  dark: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  light: {
+    backgroundColor: "white",
+    color: "black",
+  },
+};
+
+export const ThemeContext = React.createContext();
 
 const App = () => {
-  const [showSurprise, setShowSurprise] = useState(false);
-
-  // useEffect(() => {
-  //   //import dinamicos
-  //   // import("./code-splitting/Hello").then((fn) => fn.default());
-  // }, []);
+  const [theme, setTheme] = useState(themes.dark);
 
   return (
     <>
-      <button onClick={() => setShowSurprise(!showSurprise)}>
-        Mostrar Ocultar
-      </button>
-      {showSurprise && <Surprise />}
+      <ThemeContext.Provider value={theme}>
+        <Button></Button>
+        <Card></Card>
+        <button onClick={() => setTheme(themes.light)}>Modo Claro</button>
+        <button onClick={() => setTheme(themes.dark)}>Modo Oscuro</button>
+      </ThemeContext.Provider>
     </>
   );
 };
